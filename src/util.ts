@@ -26,7 +26,6 @@ import { TypedMessageParams } from './message-manager/TypedMessageManager';
 import { Token } from './assets/TokenRatesController';
 import { MAINNET } from './constants';
 import { Json } from './BaseControllerV2';
-import { StaticWeb3Provider } from './StaticWeb3Provider';
 
 const TIMEOUT_ERROR = new Error('timeout');
 
@@ -1023,8 +1022,4 @@ function logOrRethrowError(error: any, codesToCatch: number[] = []) {
   } else {
     throw error;
   }
-}
-
-export function getEthersProvider(provider: any, chainId?: number) {
-  return new StaticWeb3Provider(provider, chainId);
 }

@@ -1,15 +1,15 @@
 import { abiERC20 } from '@metamask/metamask-eth-abis';
 import { BN, toUtf8 } from 'ethereumjs-util';
-import { BigNumber, Contract, providers } from 'ethers';
+import { BigNumber, Contract } from 'ethers';
 import { AbiCoder } from 'ethers/lib/utils';
+import { StaticWeb3Provider } from '../../StaticWeb3Provider';
 import { ERC20 } from '../../constants';
-import { getEthersProvider } from '../../util';
 
 export class ERC20Standard {
-  private provider: providers.Web3Provider;
+  private provider: StaticWeb3Provider;
 
   constructor(provider: any, chainId: number) {
-    this.provider = getEthersProvider(provider, chainId);
+    this.provider = new StaticWeb3Provider(provider, chainId);
   }
 
   /**
