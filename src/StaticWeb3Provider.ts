@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /* eslint-disable no-eq-null, import/no-extraneous-dependencies, node/no-extraneous-import */
 import { Network } from '@ethersproject/providers';
 import { providers, logger } from 'ethers';
