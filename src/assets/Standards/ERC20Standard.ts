@@ -4,6 +4,7 @@ import { BigNumber, Contract } from 'ethers';
 import { AbiCoder } from 'ethers/lib/utils';
 import { StaticWeb3Provider } from '../../StaticWeb3Provider';
 import { ERC20 } from '../../constants';
+import { ethersBigNumberToBN } from '../../util';
 
 export class ERC20Standard {
   private provider: StaticWeb3Provider;
@@ -21,7 +22,7 @@ export class ERC20Standard {
    */
   async getBalanceOf(address: string, selectedAddress: string): Promise<BN> {
     const contract = new Contract(address, abiERC20, this.provider);
-    return contract.balanceOf(selectedAddress);
+    return contract.balanceOf(selectedAddress).then(ethersBigNumberToBN);
   }
 
   /**
