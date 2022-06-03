@@ -8,8 +8,8 @@ import { ERC20 } from '../../constants';
 export class ERC20Standard {
   private provider: StaticWeb3Provider;
 
-  constructor(provider: any, chainId: number) {
-    this.provider = new StaticWeb3Provider(provider, chainId);
+  constructor(provider: StaticWeb3Provider) {
+    this.provider = provider;
   }
 
   /**
