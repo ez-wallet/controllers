@@ -1,6 +1,6 @@
 import { abiERC20 } from '@metamask/metamask-eth-abis';
 import { BN, toUtf8 } from 'ethereumjs-util';
-import { Contract, providers } from 'ethers';
+import { BigNumber, Contract, providers } from 'ethers';
 import { AbiCoder } from 'ethers/lib/utils';
 import { ERC20 } from '../../constants';
 import { getEthersProvider } from '../../util';
@@ -32,7 +32,9 @@ export class ERC20Standard {
    */
   async getTokenDecimals(address: string): Promise<string> {
     const contract = new Contract(address, abiERC20, this.provider);
-    return contract.decimals();
+    return contract
+      .decimals()
+      .then((result: BigNumber | string) => result.toString());
   }
 
   /**
