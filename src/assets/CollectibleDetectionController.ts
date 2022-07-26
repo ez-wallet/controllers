@@ -2,7 +2,7 @@ import { BaseController, BaseConfig, BaseState } from '../BaseController';
 import type { NetworkState, NetworkType } from '../network/NetworkController';
 import type { PreferencesState } from '../user/PreferencesController';
 import { safelyExecute, timeoutFetch, toChecksumHexAddress } from '../util';
-import { MAINNET } from '../constants';
+import { MAINNET, RINKEBY_CHAIN_ID } from '../constants';
 import type {
   CollectiblesController,
   CollectiblesState,
@@ -132,7 +132,13 @@ export class CollectibleDetectionController extends BaseController<
   private intervalId?: NodeJS.Timeout;
 
   private getOwnerCollectiblesApi(address: string, offset: number) {
-    return `https://api.opensea.io/api/v1/assets?owner=${address}&offset=${offset}&limit=50`;
+    const { chainId } = this.config;
+    switch (chainId) {
+      case RINKEBY_CHAIN_ID:
+        return `https://testnets-api.opensea.io/api/v1/assets?owner=${address}&offset=${offset}&limit=50`;
+      default:
+        return `https://api.opensea.io/api/v1/assets?owner=${address}&offset=${offset}&limit=50`;
+    }
   }
 
   private async getOwnerCollectibles(address: string) {
@@ -302,7 +308,7 @@ export class CollectibleDetectionController extends BaseController<
    */
   async detectCollectibles() {
     /* istanbul ignore if */
-    if (!this.isMainnet() || this.disabled) {
+    if (this.disabled) {
       return;
     }
     const { selectedAddress, chainId } = this.config;
